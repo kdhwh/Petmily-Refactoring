@@ -41,23 +41,17 @@ const Login = () => {
     setIsLoginLoading(true);
     const { email, password } = data;
     try {
-      const { data, status } = await axios.post(`${apiUrl}/auth/login`, { email, password });
+      const { data, status } = await axios.post(`${apiUrl}/auth/local`, { identifier: email, password });
 
       if (status === 200) {
-        document.cookie = `access_token=${data.accessToken}; path=/;`;
-        document.cookie = `refresh_token=${data.refreshToken};  path=/; expires=${expirationDate.toUTCString()};`;
+        document.cookie = `access_token=${data.jwt}; path=/;`;
 
         dispatch(login());
         navigate('/');
       }
     } catch (error: any) {
-      console.log(error);
-      if (error.response.data.message === '이메일 또는 비밀번호가 일치하지 않습니다.') {
-        alert(error.response.data.message);
-      }
-
-      if (error.response.data.messgae === '탈퇴한 회원입니다.') {
-        alert(error.response.data.message);
+      if (error.response.status === 400) {
+        alert('아이디와 비밀번호를 확인해주세요.');
       }
     }
     setIsLoginLoading(false);
