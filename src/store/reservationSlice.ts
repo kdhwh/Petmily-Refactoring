@@ -12,7 +12,7 @@ export interface IPet {
 
 export interface IReservation {
   reservation: {
-    reservationDay: string;
+    reservationDate: string;
     reservationTimeStart: string;
     reservationTimeEnd: string;
     address: string;
@@ -27,7 +27,7 @@ export interface IReservation {
 export const reservationSlice = createSlice({
   name: 'reservation',
   initialState: {
-    reservationDay: '',
+    reservationDate: '',
     reservationTimeStart: '',
     reservationTimeEnd: '',
     address: '',
@@ -38,7 +38,7 @@ export const reservationSlice = createSlice({
   },
   reducers: {
     setReservation: (state, action) => {
-      state.reservationDay = action.payload.reservationDay;
+      state.reservationDate = action.payload.reservationDate;
       state.reservationTimeStart = action.payload.reservationTimeStart;
       state.reservationTimeEnd = action.payload.reservationTimeEnd;
       state.address = action.payload.address;
@@ -53,7 +53,7 @@ export const reservationSlice = createSlice({
       state.body = action.payload.body;
     },
     deleteReservation: (state) => {
-      state.reservationDay = '';
+      state.reservationDate = '';
       state.reservationTimeStart = '';
       state.reservationTimeEnd = '';
       state.address = '';

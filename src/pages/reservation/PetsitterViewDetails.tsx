@@ -73,7 +73,7 @@ const PetsitterViewDetails = () => {
   const [petsitterData, setPetsitterData] = useState<any>();
 
   const { isLogin, memberId, petsitterBoolean } = useSelector((state: IUser) => state.user);
-  const { reservationDay, reservationTimeStart, reservationTimeEnd, address, petId, pets } = useSelector(
+  const { reservationDate, reservationTimeStart, reservationTimeEnd, address, petId, pets } = useSelector(
     (state: IReservation) => state.reservation,
   );
 
@@ -87,8 +87,8 @@ const PetsitterViewDetails = () => {
     const accessToken = getCookieValue('access_token');
     if (isLogin) {
       try {
-        const response = await axios.patch(
-          `${apiUrl}/members/favorite?petsitterId=${petsitterId}`,
+        const response = await axios.put(
+          `${apiUrl}/members/favorite/${petsitterId}`,
           {}, //추가적인 데이터 없음
           {
             headers: {
@@ -105,8 +105,8 @@ const PetsitterViewDetails = () => {
       try {
         const newAccessToken = await refreshAccessToken();
         if (newAccessToken) {
-          const response = await axios.patch(
-            `${apiUrl}/members/favorite?petsitterId=${petsitterId}`,
+          const response = await axios.put(
+            `${apiUrl}/members/favorite/${petsitterId}`,
             {}, //추가적인 데이터 없음
             {
               headers: {
@@ -126,7 +126,7 @@ const PetsitterViewDetails = () => {
     // 선택된 날짜와 시간을 스토어에 저장
     dispatch(
       setReservation({
-        reservationDay: selectedDates ? selectedDates.format('YYYY-MM-DD') : '',
+        reservationDate: selectedDates ? selectedDates.format('YYYY-MM-DD') : '',
         reservationTimeStart: selectedTimes.length > 0 ? selectedTimes[0] : '',
         reservationTimeEnd: selectedTimes.length > 0 ? selectedTimes[selectedTimes.length - 1] : '',
         address,
@@ -159,7 +159,7 @@ const PetsitterViewDetails = () => {
       const accessToken = getCookieValue('access_token');
       if (isLogin) {
         try {
-          const response = await axios.get(`${apiUrl}/members/favoriteTrue?petsitterId=${petsitterId}`, {
+          const response = await axios.get(`${apiUrl}/members/favorite/${petsitterId}`, {
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },

@@ -20,7 +20,7 @@ interface PetsitterProps {
 const bucketUrl = process.env.REACT_APP_BUCKET_URL;
 
 const PetsitterCard = ({ petsitter }: PetsitterProps) => {
-  const { reservationDay, reservationTimeStart, reservationTimeEnd } = useSelector(
+  const { reservationDate, reservationTimeStart, reservationTimeEnd } = useSelector(
     (state: IReservation) => state.reservation,
   );
 

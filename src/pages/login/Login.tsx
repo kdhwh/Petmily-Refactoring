@@ -45,7 +45,6 @@ const Login = () => {
 
       if (status === 200) {
         document.cookie = `access_token=${data.jwt}; Max-age=3600; path=/;`;
-
         dispatch(login());
         navigate('/');
       }
