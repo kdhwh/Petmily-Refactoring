@@ -10,7 +10,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 // 펫 이미지 없을 때 디폴트 이미지 수정
 // 펫밀리 카드 디자인 수정
 
-const BucketUrl = process.env.REACT_APP_BUCKET_URL || '';
+const BucketUrl = process.env.REACT_APP_BUCKET_URL;
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const MyPetmily = () => {
@@ -25,8 +25,8 @@ const MyPetmily = () => {
     const fetchData = async () => {
       try {
         const getPets = await axios.get(`${apiUrl}/pets`, { headers });
-
         const petmily = getPets.data;
+
         setPetmily(petmily);
       } catch (error) {
         console.error('error', error);
@@ -52,7 +52,7 @@ const MyPetmily = () => {
             <PetmilyCard key={pet.petId}>
               <ImageContainer>
                 {pet.photo ? (
-                  <PetPhoto src={pet.photo.replace(/https:\/\/bucketUrl/g, BucketUrl)} alt="pet" />
+                  <PetPhoto src={`${BucketUrl}${pet.photo}`} alt="pet" />
                 ) : pet.type === 'CAT' ? (
                   <PetPhoto src="imgs/CatProfile.png" alt="Cat" />
                 ) : (

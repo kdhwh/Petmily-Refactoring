@@ -15,27 +15,24 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { getCookieValue } from 'hooks/getCookie';
 import { useForm } from 'react-hook-form';
-import { StyledButton, ErrorMsg, StyledTextField, InfoText } from './EditUserProfile';
+import { StyledButton, ErrorMsg, InfoText } from './EditUserProfile';
 import { TextField } from '@mui/material';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-//  중성화 수정 (등록할 떄 중성화 하지 않은 펫만 가능)
-//  펫 삭제 확인
+//  중성화 수정 (등록할 때 중성화 하지 않은 펫만 가능)
 
 const schema = yup.object().shape({
   name: yup.string().max(50, '이름은 최대 50자를 초과할 수 없습니다.').required('이 항목은 필수입니다.'),
   age: yup
     .number()
     .integer('나이는 정수로 입력해 주세요.')
-    .min(1, '나이는 1살 이상이어야 합니다.')
     .max(100, '나이는 100살 이하이어야 합니다.')
     .required('이 항목은 필수입니다.')
     .typeError('나이는 숫자만 입력해 주세요.'),
   species: yup.string(),
   weight: yup
     .number()
-    .min(1, '몸무게는 1kg 이상이어야 합니다.')
     .max(100, '몸무게는 100kg 이하이어야 합니다.')
     .required('이 항목은 필수입니다.')
     .typeError('몸무게는 숫자만 입력해 주세요.'),
@@ -49,10 +46,10 @@ type IEditPet = yup.InferType<typeof schema>;
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
+// 펫 수정
 const EditPet = () => {
   const navigate = useNavigate();
 
-  // 펫아이디 나오는지 확인
   const { petId } = useParams();
 
   const [isLoaded, setIsLoaded] = useState(false);
@@ -68,7 +65,7 @@ const EditPet = () => {
     photo: '',
   });
 
-  const { register, setValue, clearErrors, handleSubmit, formState } = useForm<IEditPet>({
+  const { register, setValue, handleSubmit, formState } = useForm<IEditPet>({
     resolver: yupResolver(schema),
   });
 
@@ -112,6 +109,8 @@ const EditPet = () => {
     const token = getCookieValue('access_token');
 
     const formData = new FormData();
+
+    formData.append('data', JSON.stringify(data));
     if (imageFile) {
       formData.append('file', imageFile);
     }
@@ -132,12 +131,15 @@ const EditPet = () => {
     }
 
     try {
-      const response = await axios.patch(`${apiUrl}/pets/${petId}`, formData, {
+      console.log(token);
+
+      const response = await axios.put(`${apiUrl}/pets/${petId}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',
         },
       });
+
       if (response.data) {
         alert('수정이 완료되었습니다.');
         navigate('/mypage');
@@ -147,22 +149,19 @@ const EditPet = () => {
     }
   };
 
+  //  펫 삭제
   const deletePet = async () => {
     const token = getCookieValue('access_token');
     const isConfirmed = window.confirm('정말 펫을 삭제하시겠습니까?');
     if (!isConfirmed) return;
     else {
       try {
-        const response = await axios.patch(
-          `${apiUrl}/pets/${petId}/disable`,
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+        const response = await axios.delete(`${apiUrl}/pets/${petId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
           },
-        );
-        if (response.data === 'Disable Pet Success') {
+        });
+        if (response.data === 'Delete Pet Success') {
           alert('펫이 삭제되었습니다.');
           navigate('/mypage');
         }
