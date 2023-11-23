@@ -9,88 +9,25 @@ const apiUrl = process.env.REACT_APP_API_URL;
 const OAuthBranch = () => {
   const navigate = useNavigate();
 
-  const expirationDate = new Date();
-  expirationDate.setDate(expirationDate.getDate() + 1);
-
   const handleMemberOAuth = async () => {
-    const refreshToken = getCookieValue('refresh_token');
-    try {
-      const response = await axios.post(
-        `${apiUrl}/refreshToken/memberToken`,
-        {},
-        { headers: { Refresh: refreshToken } },
-      );
-
-      if (response.status === 200) {
-        document.cookie = `access_token=${response.data.accessToken}; path=/;`;
-        document.cookie = `refresh_token=${
-          response.data.refreshToken
-        }; path=/; expires=${expirationDate.toUTCString()};`;
-
-        alert('회원가입이 완료되었습니다!');
-        navigate('/');
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    console.log('hi');
   };
 
-  // 펫시터는 다른 token으로 교체
   const handlePetsitterOAuth = async () => {
-    const refreshToken = getCookieValue('refresh_token');
-    try {
-      const response = await axios.post(
-        `${apiUrl}/refreshToken/petsitterToken`,
-        {},
-        {
-          headers: {
-            Refresh: refreshToken,
-          },
-        },
-      );
-
-      if (response.status === 200) {
-        document.cookie = `access_token=${response.data.accessToken}; path=/;`;
-        document.cookie = `refresh_token=${
-          response.data.refreshToken
-        }; path=/; expires=${expirationDate.toUTCString()};`;
-
-        alert('회원가입이 완료되었습니다!');
-        navigate('/');
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    console.log('hi');
   };
 
   // OAuth token 받아오기(일반 고객 & 펫시터)
   useEffect(() => {
-    const url = new URL(window.location.href);
-    const search = url.search;
+    const urlParams = new URLSearchParams(window.location.search);
+    const idToken = urlParams.get('id_token');
+    const accessToken = urlParams.get('access_token');
 
-    if (search) {
-      const accessToken = search.split('=')[1].split('&')[0];
-      const refreshToken = search.split('=')[2];
-
-      document.cookie = `access_token=${accessToken}; path=/;`;
-      document.cookie = `refresh_token=${refreshToken};  path=/; expires=${expirationDate.toUTCString()};`;
-
-      if (accessToken) {
-        axios
-          .get(`${apiUrl}/members/my-page`, {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          })
-          .then((res) => {
-            if (res.data.petsitterBoolean === true || res.data.petsitterBoolean === false) {
-              navigate('/', { replace: true });
-            } else if (res.data.petsitterBoolean === null) {
-              navigate('/signup/branch', { replace: true });
-            }
-          });
-      }
-    }
+    useEffect(() => {
+      axios.get(`${apiUrl}/auth/google/callback?access_token=${accessToken}`).then((res) => {
+        console.log(res);
+      });
+    }, []);
   }, []);
 
   return (

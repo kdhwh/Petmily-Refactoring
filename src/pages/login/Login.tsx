@@ -44,7 +44,7 @@ const Login = () => {
       const { data, status } = await axios.post(`${apiUrl}/auth/local`, { identifier: email, password });
 
       if (status === 200) {
-        document.cookie = `access_token=${data.jwt}; path=/;`;
+        document.cookie = `access_token=${data.jwt}; Max-age=3600; path=/;`;
 
         dispatch(login());
         navigate('/');
