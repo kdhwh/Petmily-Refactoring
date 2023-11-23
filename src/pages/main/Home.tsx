@@ -160,9 +160,9 @@ const Home = () => {
                 <ImageContainer>
                   {review.memberPhoto ? (
                     <MemberPhotoImage
-                      src={review.memberPhoto.replace('https:/bucketUrl', bucketUrl)}
-                      alt="client"
-                      onError={onErrorImg}
+                    // src={review.memberPhoto.replace('https:/bucketUrl', bucketUrl)}
+                    // alt="client"
+                    // onError={onErrorImg}
                     />
                   ) : (
                     <img src="/imgs/DefaultUser.svg" alt="clientPhoto" />

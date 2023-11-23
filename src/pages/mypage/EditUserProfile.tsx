@@ -85,6 +85,9 @@ const EditUserProfile = () => {
     const token = getCookieValue('access_token');
 
     const formData = new FormData();
+
+    formData.append('data', JSON.stringify(data));
+
     if (imageFile) {
       formData.append('file', imageFile);
     }
@@ -102,7 +105,7 @@ const EditUserProfile = () => {
     }
 
     try {
-      const response = await axios.patch(`${apiUrl}/members/${memberId}`, formData, {
+      const response = await axios.put(`${apiUrl}/members/${memberId}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',
@@ -119,7 +122,7 @@ const EditUserProfile = () => {
 
   const handleLogout = () => {
     deleteCookie('access_token');
-    deleteCookie('refresh_token');
+    // deleteCookie('refresh_token');
     dispatch(deleteUser());
     alert('로그아웃되었습니다.');
     navigate('/');
@@ -131,19 +134,15 @@ const EditUserProfile = () => {
     if (!isConfirmed) return;
 
     try {
-      const response = await axios.patch(
-        `${apiUrl}/members/${memberId}/disable`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+      const response = await axios.delete(`${apiUrl}/members/${memberId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-      );
+      });
       if (response.data.data === 'success delete member') {
-        alert('계정이 삭제되었습니다');
+        alert('계정이 삭제되었습니다.');
         deleteCookie('access_token');
-        deleteCookie('refresh_token');
+        // deleteCookie('refresh_token');
         dispatch(deleteUser());
         navigate('/');
       }
