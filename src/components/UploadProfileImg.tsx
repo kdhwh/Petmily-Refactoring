@@ -28,7 +28,8 @@ const UploadProfileImg = ({ petId, setImageFile, currentImageUrl, defaultProfile
 
   useEffect(() => {
     if (currentImageUrl) {
-      setPreviewImage(currentImageUrl.replace(/https:\/\/bucketUrl/g, BucketUrl));
+      const imageUrl = `${BucketUrl}${currentImageUrl}`;
+      setPreviewImage(imageUrl);
       setImageOnServer(true);
     } else {
       setPreviewImage(defaultProfileImg);
