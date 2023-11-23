@@ -95,7 +95,7 @@ const Signup = () => {
     }
 
     try {
-      const { data } = await axios.post(`${apiUrl}/members`, {
+      const { data, status } = await axios.post(`${apiUrl}/auth/local/register`, {
         name,
         phone,
         address: `${address} ${detailAddress}`,
@@ -104,19 +104,16 @@ const Signup = () => {
         password,
         petsitterBoolean,
       });
-      if (data.data === 'success create member') {
+
+      if (status === 200) {
         alert('가입을 축하합니다.');
         navigate('/login');
       }
-    } catch (error: any) {
-      console.log(error);
-      if (error.response.data.status === 409) {
-        setError('email', { type: 'serverError', message: error.response.data.message });
-      }
-      // if (error.response.data.fieldErrors) {
-      //   const fieldErrors = error.response.data.fieldErrors;
-      // }
+    } catch (e) {
+      console.log(e);
+      alert('회원 가입에 실패하였습니다. 다시 시도해 주세요.');
     }
+
     setIsSignupLoading(false);
   };
 

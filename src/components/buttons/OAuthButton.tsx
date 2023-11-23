@@ -8,11 +8,11 @@ const GoogleOAuthButton = ({ children }: Props) => {
   const apiUrl = process.env.REACT_APP_API_URL;
 
   const handleGooleOAuth = () => {
-    window.location.assign(`${apiUrl}/oauth2/authorization/google`);
+    window.location.assign(`${apiUrl}/connect/google`);
   };
   return (
     <GoogleOAuthButtonStyle onClick={handleGooleOAuth}>
-      <img src="/imgs/GoogleLogo.svg" alt="google logo" width="24"></img>
+      <img src="/imgs/GoogleLogo.svg" alt="google logo" width="24" />
       <div>{children}</div>
     </GoogleOAuthButtonStyle>
   );
