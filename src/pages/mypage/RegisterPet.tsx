@@ -67,6 +67,9 @@ const RegisterPet = () => {
     const token = getCookieValue('access_token');
 
     const formData = new FormData();
+
+    formData.append('data', JSON.stringify(data));
+
     if (imageFile) {
       formData.append('file', imageFile);
     }
@@ -101,9 +104,9 @@ const RegisterPet = () => {
 
       <MainContainer>
         <UploadProfileImg
-          currentImageUrl={
-            imageFile ? URL.createObjectURL(imageFile) : type === 'DOG' ? defaultDogProfile : defaultCatProfile
-          }
+          // currentImageUrl={
+          //   imageFile ? URL.createObjectURL(imageFile) : type === 'DOG' ? defaultDogProfile : defaultCatProfile
+          // }
           setImageFile={handleImageFileChange}
           defaultProfileImg={type === 'DOG' ? defaultDogProfile : defaultCatProfile}
         />
