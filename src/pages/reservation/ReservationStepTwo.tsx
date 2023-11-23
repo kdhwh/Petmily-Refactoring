@@ -19,7 +19,7 @@ const ReservationStepTwo = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { reservationDay, reservationTimeStart, reservationTimeEnd, address, petId, pets } = useSelector(
+  const { reservationDate, reservationTimeStart, reservationTimeEnd, address, petId, pets } = useSelector(
     (state: IReservation) => state.reservation,
   );
 
@@ -46,7 +46,7 @@ const ReservationStepTwo = () => {
   };
 
   useEffect(() => {
-    if (!reservationDay || !reservationTimeStart || !reservationTimeEnd || !address || !petId) {
+    if (!reservationDate || !reservationTimeStart || !reservationTimeEnd || !address || !petId) {
       alert('예약을 처음부터 해주세요.');
       navigate('/reservation');
     }
@@ -60,7 +60,7 @@ const ReservationStepTwo = () => {
           const response = await axios.post(
             `${apiUrl}/reservations/petsitters`,
             {
-              reservationDay,
+              reservationDate,
               reservationTimeStart,
               reservationTimeEnd,
               address,
@@ -80,7 +80,7 @@ const ReservationStepTwo = () => {
                 const response = await axios.post(
                   `${apiUrl}/reservations/petsitters`,
                   {
-                    reservationDay,
+                    reservationDate,
                     reservationTimeStart,
                     reservationTimeEnd,
                     address,

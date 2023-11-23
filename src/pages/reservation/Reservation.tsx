@@ -66,7 +66,7 @@ const Reservation = () => {
 
   // submit state
   const { isLogin, petsitterBoolean } = useSelector((state: IUser) => state.user);
-  const [reservationDay, setReservationDay] = useState<any>('');
+  const [reservationDate, setReservationDate] = useState<any>('');
   const [reservationTimeStart, setReservationTimeStart] = useState<any>('');
   const [reservationTimeEnd, setReservationTimeEnd] = useState('');
   const [checkedPetId, setCheckedPetId] = useState<any[]>([]);
@@ -111,7 +111,7 @@ const Reservation = () => {
 
   // Date handler
   const handleDateChange = (newDate: any) => {
-    setReservationDay(dayjs(newDate).format('YYYY-MM-DD'));
+    setReservationDate(dayjs(newDate).format('YYYY-MM-DD'));
   };
 
   // Time handler
@@ -236,26 +236,29 @@ const Reservation = () => {
       }
     } catch (error: any) {
       console.log(error);
-      if (error.response && error.response.status === 401) {
-        try {
-          const newAccessToken = await refreshAccessToken();
-          if (newAccessToken) {
-            const response = await axios.post(`${apiUrl}/pets`, formData, {
-              headers: {
-                Authorization: `Bearer ${newAccessToken}`,
-                'Content-Type': 'multipart/form-data',
-              },
-            });
-            if (response.status === 201) {
-              alert('펫 등록되었습니다.');
-              setIsPetModalOpen(false);
-            }
-          }
-        } catch (error) {
-          // 에러 설정 해야함 (access token이 재발급 되지 않는 상황)
-          console.log(error);
-        }
+      if (error.respose && error.response.status === 401) {
+        window.location.href = '/login';
       }
+      // if (error.response && error.response.status === 401) {
+      //   try {
+      //     const newAccessToken = await refreshAccessToken();
+      //     if (newAccessToken) {
+      //       const response = await axios.post(`${apiUrl}/pets`, formData, {
+      //         headers: {
+      //           Authorization: `Bearer ${newAccessToken}`,
+      //           'Content-Type': 'multipart/form-data',
+      //         },
+      //       });
+      //       if (response.status === 201) {
+      //         alert('펫 등록되었습니다.');
+      //         setIsPetModalOpen(false);
+      //       }
+      //     }
+      //   } catch (error) {
+      //     // 에러 설정 해야함 (access token이 재발급 되지 않는 상황)
+      //     console.log(error);
+      //   }
+      // }
     }
   };
 
@@ -278,7 +281,7 @@ const Reservation = () => {
     } else if (pickerError === 'shouldDisableTime-minutes' || pickerError === 'minutesStep') {
       alert('예약 시간은 정시 또는 30분 단위로 선택해야 합니다.');
     } else if (
-      reservationDay &&
+      reservationDate &&
       reservationTimeStart &&
       reservationTimeEnd &&
       address &&
@@ -287,7 +290,7 @@ const Reservation = () => {
     ) {
       dispatch(
         setReservation({
-          reservationDay,
+          reservationDate,
           reservationTimeStart,
           reservationTimeEnd,
           address: `${address} ${detailAddress}`,
@@ -364,7 +367,7 @@ const Reservation = () => {
               <DatePicker
                 label="날짜를 입력해주세요"
                 format="YYYY-MM-DD"
-                value={reservationDay}
+                value={reservationDate}
                 onChange={handleDateChange}
                 shouldDisableDate={(day) => {
                   dayjs.extend(isBetween);
@@ -396,7 +399,7 @@ const Reservation = () => {
                     ampm={false}
                     shouldDisableTime={(value, view) => {
                       const currentTime = dayjs();
-                      if (!currentTime.isSame(dayjs(reservationDay), 'date')) {
+                      if (!currentTime.isSame(dayjs(reservationDate), 'date')) {
                         return false;
                       }
                       if (view === 'hours') {

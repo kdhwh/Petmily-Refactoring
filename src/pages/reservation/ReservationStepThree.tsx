@@ -47,7 +47,7 @@ const ReservationStepFour = () => {
   } = useForm<IFormInput>();
 
   // 예약 정보 가져오기
-  const { reservationDay, reservationTimeStart, reservationTimeEnd, address, body, petId, pets } = useSelector(
+  const { reservationDate, reservationTimeStart, reservationTimeEnd, address, body, petId, pets } = useSelector(
     (state: IReservation) => state.reservation,
   );
   const { name, nickName, phone } = useSelector((state: IUser) => state.user);
@@ -108,7 +108,7 @@ const ReservationStepFour = () => {
     const petsitterIdNumber = parseInt(petsitterId, 10);
     const requestBody = {
       body,
-      reservationDay,
+      reservationDate,
       reservationTimeStart: reservationTimeStartFormat,
       reservationTimeEnd: reservationTimeEndFormat,
       address,
@@ -118,12 +118,12 @@ const ReservationStepFour = () => {
     };
     console.log(requestBody);
     try {
-      const response = await axios.post(`${apiUrl}/reservations/`, requestBody, {
+      const response = await axios.post(`${apiUrl}/reservations`, requestBody, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      if (response.data === 'Reservation Created') {
+      if (response.status === 200) {
         alert('예약 신청이 완료되었습니다!');
         dispatch(deleteReservation());
         navigate('/cares');
@@ -178,7 +178,7 @@ const ReservationStepFour = () => {
           </TitleWrap>
           <ContentWrap>
             <Address>{address}</Address>
-            <ReservationDay>{reservationDay}</ReservationDay>
+            <ReservationDay>{reservationDate}</ReservationDay>
             <ReservationTime>{`${reservationTimeStart} ~ ${reservationTimeEnd}`}</ReservationTime>
           </ContentWrap>
         </ReservationResult>
