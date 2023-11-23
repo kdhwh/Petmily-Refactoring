@@ -6,8 +6,6 @@ import BackHeader from '@components/headers/BackHeader';
 import LoadingFallback from '@components/LoadingFallback';
 import NavHeader from '@components/headers/NavHeader';
 
-const Redirect = lazy(() => import('@pages/main/Redirect'));
-const Test = lazy(() => import('@pages/main/Test'));
 const Home = lazy(() => import('@pages/main/Home'));
 const PetSitterHome = lazy(() => import('@pages/main/PetSitterHome'));
 const Login = lazy(() => import('@pages/login/Login'));
@@ -85,7 +83,6 @@ const App = () => {
                 <Route path="cares" element={<Cares />} />
                 <Route path="cares/:reservationId/review" element={<CreateReview />} />
                 <Route path="cares/:reservationId/journal" element={<CreateJournal />} />
-                <Route path="test" element={<Test />} />
               </Route>
               <Route path="/" element={<BackHeaderLayout />}>
                 <Route path="login" element={<Login />} />
@@ -102,7 +99,6 @@ const App = () => {
                 <Route path="petsitters/:petsitterId" element={<PetsitterViewDetails />} />
                 <Route path="petsitters/:memberId/schedule" element={<SitterSchedule />} />
               </Route>
-              <Route path="connect/google/redirect" element={<Redirect />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
