@@ -44,7 +44,7 @@ export const userSlice = createSlice({
       state.email = action.payload.email;
       state.nickName = action.payload.nickName;
       state.body = action.payload.body;
-      state.photo = action.payload.photo;
+      state.photo = action.payload.photo && action.payload.photo.url;
       state.petsitterBoolean = action.payload.petsitterBoolean;
     },
     deleteUser: (state) => {

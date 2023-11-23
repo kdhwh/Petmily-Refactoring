@@ -62,11 +62,11 @@ const MySchedule = () => {
   // 케어가능 펫
   const getPetTypeDisplayText = (type: string) => {
     switch (type) {
-      case 'PET_CAT':
+      case 'CAT':
         return '고양이';
-      case 'PET_DOG':
+      case 'DOG':
         return '강아지';
-      case 'PET_ALL':
+      case 'DOGCAT':
         return '강아지와 고양이';
       default:
         return '';

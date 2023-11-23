@@ -23,11 +23,11 @@ import { TextField } from '@mui/material';
 //  주소가 바뀌어야 수정 가능
 
 interface IEditSchedule {
-  possiblePetType?: 'PET_DOG' | 'PET_CAT' | 'PET_ALL';
+  possiblePetType?: 'DOG' | 'CAT' | 'DOGCAT';
   possibleDay?: string;
   possibleTimeStart?: string;
   possibleTimeEnd?: string;
-  possibleLocation?: string[];
+  possibleLocation?: string;
 }
 
 type InfoType = {
@@ -196,15 +196,16 @@ const SitterSchedule = () => {
     }
     data.possibleTimeStart = possibleStartTime?.format('HH:mm:ss') || '';
     data.possibleTimeEnd = possibleEndTime?.format('HH:mm:ss') || '';
-    data.possibleLocation = [possibleLocation];
+    data.possibleLocation = possibleLocation;
 
+    console.log(data);
     try {
-      const response = await axios.patch(`${apiUrl}/members/petsitters/${memberId}`, data, {
+      const response = await axios.put(`${apiUrl}/members/petsitters/${memberId}`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      if (response.data.data === 'success modify member') {
+      if (response.data === 'update success') {
         alert('일정이 저장되었습니다.');
         navigate('/mypage');
       }
@@ -225,15 +226,15 @@ const SitterSchedule = () => {
             <InputLabelStyle htmlFor="possiblePetType">어떤 펫을 케어 가능하신가요?</InputLabelStyle>
             <RadioContainer>
               <RadioWrapper>
-                <input type="radio" value="PET_DOG" {...register('possiblePetType')} />
+                <input type="radio" value="DOG" {...register('possiblePetType')} />
                 <RadioLabel htmlFor="male">강아지</RadioLabel>
               </RadioWrapper>
               <RadioWrapper>
-                <input type="radio" value="PET_CAT" {...register('possiblePetType')} />
+                <input type="radio" value="CAT" {...register('possiblePetType')} />
                 <RadioLabel htmlFor="female">고양이</RadioLabel>
               </RadioWrapper>
               <RadioWrapper>
-                <input type="radio" value="PET_ALL" {...register('possiblePetType')} />
+                <input type="radio" value="DOGCAT" {...register('possiblePetType')} />
                 <RadioLabel htmlFor="female">모두</RadioLabel>
               </RadioWrapper>
             </RadioContainer>
