@@ -86,7 +86,6 @@ const App = () => {
                 <Route path="cares/:reservationId/review" element={<CreateReview />} />
                 <Route path="cares/:reservationId/journal" element={<CreateJournal />} />
                 <Route path="test" element={<Test />} />
-                <Route path="connect/google/redirect" element={<Redirect />} />
               </Route>
               <Route path="/" element={<BackHeaderLayout />}>
                 <Route path="login" element={<Login />} />
@@ -103,6 +102,7 @@ const App = () => {
                 <Route path="petsitters/:petsitterId" element={<PetsitterViewDetails />} />
                 <Route path="petsitters/:memberId/schedule" element={<SitterSchedule />} />
               </Route>
+              <Route path="connect/google/redirect" element={<Redirect />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
