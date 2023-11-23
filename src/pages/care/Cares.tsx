@@ -9,7 +9,6 @@ import { getCookieValue } from 'hooks/getCookie';
 import { useInView } from 'react-intersection-observer';
 import jwt_decode from 'jwt-decode';
 import { refreshAccessToken } from 'hooks/refreshAcessToken';
-
 import { CircularProgress } from '@mui/material';
 
 const apiUrl = process.env.REACT_APP_API_URL;
@@ -39,6 +38,7 @@ const Cares = () => {
     setIsEnd(false);
     setPage(1);
   };
+
   useEffect(() => {
     if (!isLogin) {
       alert('로그인을 해주세요.');
@@ -56,13 +56,13 @@ const Cares = () => {
     }
   }, []);
 
-  // 예약 불러오기 (access token 재발급 완료)
+  // 예약 불러오기
   useEffect(() => {
     if (isLogin && inView) {
       const getCares = async () => {
         try {
           const response = await axios.get(
-            `${apiUrl}/reservations/${petsitterBoolean ? 'petsitter' : 'member'}?page=${page}&size=10${filters
+            `${apiUrl}/reservations?page=${page}&size=10${filters
               .map((filterItem) => {
                 if (filter === filterItem.text) {
                   return filterItem.value;
@@ -76,6 +76,7 @@ const Cares = () => {
               },
             },
           );
+
           setReservations((prev) => [...prev, ...response.data.reservations]);
           setPage((page) => page + 1);
           if (response.data.pageInfo.totalPages === page || response.data.pageInfo.totalPages === 0) {
@@ -84,31 +85,6 @@ const Cares = () => {
         } catch (error: any) {
           if (error) {
             setIsEnd(true);
-          }
-          if (error.response.status === 401) {
-            try {
-              const newAccessToken = await refreshAccessToken();
-              const response = await axios.get(
-                `${apiUrl}/reservations/${petsitterBoolean ? 'petsitter' : 'member'}?page=${page}&size=10${filters
-                  .map((filterItem) => {
-                    if (filter === filterItem.text) {
-                      return filterItem.value;
-                    }
-                    return '';
-                  })
-                  .join('')}`,
-                {
-                  headers: {
-                    Authorization: `Bearer ${newAccessToken}`,
-                  },
-                },
-              );
-              setReservations((prev) => [...prev, ...response.data.reservations]);
-              setPage((page) => page + 1);
-            } catch (error) {
-              // 에러 설정 해야함 (access token이 재발급 되지 않는 상황)
-              console.log(error);
-            }
           }
         }
       };

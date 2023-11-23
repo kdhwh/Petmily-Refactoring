@@ -16,7 +16,7 @@ const CareCard = ({ reservation }: any) => {
 
   const { memberId, petsitterBoolean } = useSelector((state: IUser) => state.user);
 
-  const [year, month, day] = reservation.reservationDay.split('-');
+  const [year, month, day] = reservation.reservationDate.split('-');
 
   const onErrorImg = (e: SyntheticEvent<HTMLImageElement, Event>) => {
     e.currentTarget.src = '/imgs/DefaultUser.svg';
