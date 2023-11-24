@@ -209,18 +209,36 @@ const Reservation = () => {
   const handlePetSubmit = async () => {
     const accessToken = getCookieValue('access_token');
 
+    // const formData = new FormData();
+
+    // formData.append('type', isCat);
+    // formData.append('name', name);
+    // formData.append('age', age);
+    // formData.append('species', species);
+    // formData.append('weight', weight);
+    // formData.append('male', isMale);
+    // formData.append('neutering', isNeutering);
+    // if (imageFile) {
+    //   formData.append('file', imageFile);
+    // }
+
+    const data = {
+      type: isCat,
+      name: name,
+      age: age,
+      species: species,
+      weight: weight,
+      male: isMale,
+      neutering: isNeutering,
+    };
+
     const formData = new FormData();
 
-    formData.append('type', isCat);
-    formData.append('name', name);
-    formData.append('age', age);
-    formData.append('species', species);
-    formData.append('weight', weight);
-    formData.append('male', isMale);
-    formData.append('neutering', isNeutering);
     if (imageFile) {
       formData.append('file', imageFile);
     }
+
+    formData.append('data', JSON.stringify(data));
 
     try {
       const response = await axios.post(`${apiUrl}/pets`, formData, {
@@ -230,8 +248,10 @@ const Reservation = () => {
         },
       });
 
-      if (response.status === 201) {
-        alert('펫 등록되었습니다.');
+      if (response.status === 200) {
+        if (typeof response.data === 'string') {
+          alert('펫 등록되었습니다.');
+        }
         setIsPetModalOpen(false);
       }
     } catch (error: any) {
@@ -488,17 +508,9 @@ const Reservation = () => {
                       />
                       <PetImgLabel htmlFor={pet.petId} checked={checkedPetId.includes(pet.petId)}>
                         <PetImg
-                          src={
-                            pet.photo ? (
-                              pet.photo.replace('https://bucketUrl', bucketUrl)
-                            ) : (
-                              <div style={{ width: '80px', height: '80px', backgroundColor: 'gray' }}>
-                                사진을 등록해 주세요
-                              </div>
-                            )
-                          }
+                          src={pet.photo ? `${bucketUrl}${pet?.photo}` : ''}
                           onError={onErrorImg}
-                          alt="펫 사진"
+                          alt={pet.photo ? '펫 사진' : '사진을 등록해 주세요'}
                         />
                       </PetImgLabel>
                     </div>

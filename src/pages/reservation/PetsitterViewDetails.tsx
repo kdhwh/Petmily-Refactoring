@@ -181,7 +181,7 @@ const PetsitterViewDetails = () => {
     <MainContainer>
       <ImgContainer>
         {petsitterData?.photo ? (
-          <img src={petsitterData?.photo.replace('https://bucketUrl', bucketUrl)} alt="펫시터 사진" />
+          <img src={`${bucketUrl}${petsitterData?.photo}`} alt="펫시터 사진" />
         ) : (
           <DefaultImg src="/imgs/User.svg" alt="default img" />
         )}

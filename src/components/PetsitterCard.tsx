@@ -33,7 +33,7 @@ const PetsitterCard = ({ petsitter }: PetsitterProps) => {
         <PetsitterContainer>
           <ImageContainer>
             {petsitter.photo ? (
-              <PetsitterImg src={petsitter.photo.replace('https://bucketUrl', bucketUrl || '')} alt="petsitter photo" />
+              <PetsitterImg src={`${bucketUrl}${petsitter?.photo}`} alt="petsitter photo" />
             ) : (
               <DefaultImg src="/imgs/PetsitterPhoto.svg" alt="default petsitter"></DefaultImg>
             )}
