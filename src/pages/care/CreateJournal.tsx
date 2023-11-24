@@ -64,8 +64,12 @@ const CreateJournal = () => {
 
     const formData = new FormData();
 
-    formData.append('reservationId', String(reservation.reservationId));
-    formData.append('body', journalText);
+    const data = {
+      reservationId: reservation.reservationId,
+      body: journalText,
+    };
+
+    formData.append('data', JSON.stringify(data));
 
     if (selectedFiles) {
       selectedFiles.map((file) => formData.append('file', file));
@@ -113,13 +117,16 @@ const CreateJournal = () => {
     setIsRegisterLoading(true);
 
     const formData = new FormData();
-    formData.append('body', journalText);
+
+    const data = {
+      body: journalText,
+    };
+
+    formData.append('data', JSON.stringify(data));
 
     if (journalImages) {
       const journalImagesString = journalImages.join(',');
-      formData.append('photos', journalImagesString);
-    } else if (!journal) {
-      formData.append('photos', '');
+      formData.append('file', journalImagesString);
     }
 
     if (selectedFiles) {
@@ -128,7 +135,7 @@ const CreateJournal = () => {
 
     if (journal?.journalId) {
       try {
-        const response = await axios.patch(`${apiUrl}/journals/${journal?.journalId}`, formData, {
+        const response = await axios.put(`${apiUrl}/journals/${journal?.journalId}`, formData, {
           headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'multipart/form-data' },
         });
         if (response.status === 200) {
@@ -149,10 +156,13 @@ const CreateJournal = () => {
       alert('권한이 없습니다.');
       navigate('/');
     } else {
+      const accessToken = getCookieValue('access_token');
       try {
-        axios.get(`${apiUrl}/reservations/${reservationId}`).then((res) => {
-          setReservation(res.data);
-        });
+        axios
+          .get(`${apiUrl}/reservations/${reservationId}`, { headers: { Authorization: `Bearer ${accessToken}` } })
+          .then((res) => {
+            setReservation(res.data);
+          });
       } catch (error: any) {
         console.log(error);
         if (error.response.status === 404) {
@@ -179,36 +189,12 @@ const CreateJournal = () => {
 
           if (response.data.photos) {
             const modifiedJournalImages = response.data.photos.map((photo: any) => {
-              if (photo.includes('https://bucketUrl')) {
-                return photo.replace('https://bucketUrl', bucketUrl);
-              }
+              return `${process.env.REACT_APP_BUCKET_URL}${photo}`;
             });
             setJournalImages(modifiedJournalImages);
           }
         } catch (error) {
           console.error(error);
-          try {
-            const newAccessToken = await refreshAccessToken();
-            if (newAccessToken) {
-              const response = await axios.get(`${apiUrl}/journals/${reservation.journalId}`, {
-                headers: {
-                  Authorization: `Bearer ${newAccessToken}`,
-                },
-              });
-              setJournal(response.data);
-              if (response.data.photos) {
-                const modifiedJournalImages = response.data.photos.map((photoUrl: any) => {
-                  if (photoUrl.includes('https://bucketUrl')) {
-                    return photoUrl.replace('https://bucketUrl', bucketUrl);
-                  }
-                });
-                setJournalImages(modifiedJournalImages);
-              }
-            }
-          } catch (refreshError) {
-            console.error(refreshError);
-            // Handle refresh error
-          }
         }
       };
 
@@ -223,8 +209,8 @@ const CreateJournal = () => {
         <ReservationContainer>
           <FirstLine>
             <InfoContainer>
-              {reservation?.petsitter?.photo ? (
-                <Photo src={reservation?.petsitter?.photo.replace('https://bucketUrl', bucketUrl)} alt="client" />
+              {reservation && reservation?.petsitter?.photo ? (
+                <Photo src={`${process.env.REACT_APP_BUCKET_URL}${reservation.petsitter.photo}`} alt="client" />
               ) : (
                 <DefaultImg src="/imgs/User.svg" alt="default img" />
               )}
