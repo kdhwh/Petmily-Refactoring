@@ -28,6 +28,7 @@ const Login = () => {
   expirationDate.setDate(expirationDate.getDate() + 1);
 
   const [isLoginLoading, setIsLoginLoading] = useState(false);
+  const [GuestLoginLoading, setGuestLoginLoading] = useState(false);
 
   const {
     register,
@@ -56,6 +57,27 @@ const Login = () => {
     setIsLoginLoading(false);
   };
 
+  // 게스트 로그인
+  const handleGuestLogin = async () => {
+    setGuestLoginLoading(true);
+
+    try {
+      const { data, status } = await axios.post(`${apiUrl}/auth/local`, {
+        identifier: 'guest@gmail.com',
+        password: 'asdf1234',
+      });
+
+      if (status === 200) {
+        document.cookie = `access_token=${data.jwt}; Max-age=3600; path=/;`;
+        dispatch(login());
+        navigate('/');
+      }
+    } catch (error) {
+      alert('게스트 로그인에 실패하였습니다.');
+    }
+    setGuestLoginLoading(false);
+  };
+
   return (
     <MainContainer>
       <LoginContainer onSubmit={handleSubmit(onSubmit)}>
@@ -70,12 +92,22 @@ const Login = () => {
             {errors.password?.message && <ErrorMessage>{errors.password?.message}</ErrorMessage>}
           </div>
           <div style={{ position: 'relative' }}>
-            <SubmitButtonStyle type="submit">로 그 인</SubmitButtonStyle>
-            {isLoginLoading && (
-              <LoadingContainer>
-                <Spinner />
-              </LoadingContainer>
-            )}
+            <SubmitButtonStyle type="submit">
+              {isLoginLoading && (
+                <LoadingContainer>
+                  <Spinner />
+                </LoadingContainer>
+              )}
+              로 그 인
+            </SubmitButtonStyle>
+            <SubmitButtonStyle type="button" onClick={handleGuestLogin} disabled={GuestLoginLoading}>
+              {GuestLoginLoading && (
+                <LoadingContainer>
+                  <Spinner />
+                </LoadingContainer>
+              )}
+              Guest 로 그 인
+            </SubmitButtonStyle>
           </div>
           <GoogleOAuthButton>Log in with Google</GoogleOAuthButton>
         </InputForm>
@@ -113,6 +145,10 @@ const InputForm = styled.form`
 `;
 
 export const SubmitButtonStyle = styled.button`
+  //
+  position: relative;
+  //
+
   margin-top: 12px;
   height: 32px;
   width: 100%;
@@ -120,6 +156,7 @@ export const SubmitButtonStyle = styled.button`
   background-color: ${({ theme }) => theme.colors.mainBlue};
   border: none;
   color: white;
+
   ${({ theme }) => theme.fontSize.s16h24};
   font-weight: ${({ theme }) => theme.fontWeights.bold};
 
@@ -161,8 +198,9 @@ const LoadingContainer = styled.div`
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: 19px;
-  left: 12px;
+  left: 20px;
+  top: 50%;
+  transform: translate(-50%, -50%);
   width: 18px;
   height: 18px;
 `;
