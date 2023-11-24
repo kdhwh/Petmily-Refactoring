@@ -8,7 +8,7 @@ import { useInView } from 'react-intersection-observer';
 import { CircularProgress } from '@mui/material';
 
 const apiUrl = process.env.REACT_APP_API_URL;
-const bucketUrl = process.env.REACT_APP_BUCKET_URL || '';
+const bucketUrl = process.env.REACT_APP_BUCKET_URL;
 
 type ReviewType = {
   memberId: number;
@@ -48,9 +48,10 @@ const Reviews = () => {
           if (response.data && response.data.reviews) {
             setReviews((prev) => [...prev, ...response.data.reviews]);
             setPage((page) => page + 1);
-            if (response.data.pageInfo.totalPages === page || response.data.pageInfo.totalPages === 0) {
-              setIsEnd(true);
-            }
+
+            // if (response.data.pageInfo.totalPages === page || response.data.pageInfo.totalPages === 0) {
+            //   setIsEnd(true);
+            // }
           }
         } catch (error) {
           console.error(error);
@@ -62,6 +63,10 @@ const Reviews = () => {
       fetchReview();
     }
   }, [inView]);
+
+  useEffect(() => {
+    console.log(reviews);
+  }, [reviews]);
 
   function formatDate(dateString: string): string {
     const date = new Date(dateString);
@@ -83,8 +88,8 @@ const Reviews = () => {
                 <ReviewContainer>
                   <Review>
                     <ImageContainer>
-                      {review.memberPhoto ? (
-                        <UserProfile bgImage={review.memberPhoto.replace('https://bucketUrl', bucketUrl)} />
+                      {review && review.memberPhoto ? (
+                        <UserProfile bgImage={`${bucketUrl}${review.memberPhoto}`} />
                       ) : (
                         <UserProfile bgImage={userDefaultImage} />
                       )}
@@ -104,7 +109,7 @@ const Reviews = () => {
                       {review.reviewPhotos && review.reviewPhotos.length > 0
                         ? review.reviewPhotos.map((photo, photoIndex) => (
                             <ImageWrapper key={photoIndex}>
-                              {photo && <img src={photo.replace('https://bucketUrl', bucketUrl)} alt="Review Photos" />}
+                              {photo && <img src={`${bucketUrl}${photo}`} alt="Review Photos" />}
                             </ImageWrapper>
                           ))
                         : [
