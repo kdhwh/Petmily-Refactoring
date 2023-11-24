@@ -95,22 +95,24 @@ const CreateReview = () => {
     setIsRegisterLoading(false);
   };
 
-  // 리뷰 수정
+  // 후기 수정
   const handleEditSubmit = async () => {
     const accessToken = getCookieValue('access_token');
     setIsRegisterLoading(true);
 
     const formData = new FormData();
 
-    formData.append('body', reviewText);
-    formData.append('star', String(star));
+    const data = {
+      reservationId: reservation.reservationId,
+      body: reviewText,
+      star,
+    };
+    formData.append('data', JSON.stringify(data));
 
     // review 이미지 다 삭제하고 보내거나 review 이미지 있으면 보내기
     if (reviewImages) {
       const reviewImagesString = reviewImages.join(',');
-      formData.append('photos', reviewImagesString);
-    } else if (!reviewImages) {
-      formData.append('photos', '');
+      formData.append('file', reviewImagesString);
     }
 
     if (selectedFiles) {
@@ -118,7 +120,7 @@ const CreateReview = () => {
     }
 
     try {
-      const response = await axios.patch(`${apiUrl}/reviews/${review?.reviewId}`, formData, {
+      const response = await axios.put(`${apiUrl}/reviews/${review?.reviewId}`, formData, {
         headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'multipart/form-data' },
       });
       if (response.status === 200) {
@@ -141,14 +143,10 @@ const CreateReview = () => {
       navigate('/');
     }
     if (accessToken) {
-      const decoded: any = jwt_decode(accessToken);
-
-      if (decoded.id !== memberId && email !== decoded.email) {
-        alert('권한이 없습니다.');
-        navigate('/');
-      } else {
-        try {
-          axios.get(`${apiUrl}/reservations/${careReservationId}`).then((res) => {
+      try {
+        axios
+          .get(`${apiUrl}/reservations/${careReservationId}`, { headers: { Authorization: `Bearer ${accessToken}` } })
+          .then((res) => {
             setReservation(res.data);
 
             // const photos = res?.data?.review?.photos;
@@ -170,9 +168,8 @@ const CreateReview = () => {
             //   }
             // }
           });
-        } catch (error: any) {
-          console.log(error);
-        }
+      } catch (error: any) {
+        console.log(error);
       }
     }
   }, []);
@@ -190,9 +187,7 @@ const CreateReview = () => {
             const photos = res.data.reviewPhotos;
             if (photos) {
               const modifiedReviewImages = photos.map((photoUrl: any) => {
-                if (photoUrl.includes('https://bucketUrl')) {
-                  return photoUrl.replace('https://bucketUrl', bucketUrl);
-                }
+                return `${process.env.REACT_APP_BUCKET_URL}${photoUrl}`;
               });
               setReviewImages(modifiedReviewImages);
             }
@@ -211,8 +206,8 @@ const CreateReview = () => {
         <ReservationContainer>
           <FirstLine>
             <Info>
-              {reservation?.photo ? (
-                <Photo src={reservation.petsitter.photo.replace('https://bucketUrl', bucketUrl)} alt="petsitter" />
+              {reservation && reservation.petsitter.photo ? (
+                <Photo src={`${process.env.REACT_APP_BUCKET_URL}${reservation.petsitter.photo}`} alt="petsitter" />
               ) : (
                 <DefaultImg src="/imgs/User.svg" alt="default img" />
               )}
