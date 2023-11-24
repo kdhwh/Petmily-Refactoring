@@ -15,7 +15,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router';
 
 const apiUrl = process.env.REACT_APP_API_URL;
-const BucketUrl = process.env.REACT_APP_BUCKET_URL || '';
+const bucketUrl = process.env.REACT_APP_BUCKET_URL || '';
 
 interface IPetsitter {
   name: string;
@@ -155,7 +155,7 @@ const ReservationStepFour = () => {
                 <PetsitterName>{petsitter.name}</PetsitterName>
                 <Petsitter>펫시터</Petsitter>
               </CardWrap>
-              <PetsitterImg src={petsitter.photo.replace(/https:\/\/bucketUrl/g, BucketUrl)} alt="PetsitterPhoto" />
+              <PetsitterImg src={`${bucketUrl}${petsitter?.photo}`} alt="PetsitterPhoto" />
               <PetsitterCardBody>
                 <RatingImg src="/imgs/Star.svg" alt="Star" />
                 <RatingCount>{petsitter.star}</RatingCount>
@@ -198,10 +198,7 @@ const ReservationStepFour = () => {
             {pets.map((pet) => (
               <DividerContainer key={pet.petId}>
                 <PetWrap>
-                  <PetImg
-                    src={pet.photo?.replace(/https:\/\/bucketUrl/g, BucketUrl) || '/imgs/PawPaw.svg'}
-                    alt="PetImg"
-                  />
+                  <PetImg src={`${bucketUrl}${pet?.photo}` || '/imgs/PawPaw.svg'} alt="PetImg" />
                   <PetInfo>
                     <PetName>{pet.name}</PetName>
                     <WrapText>
