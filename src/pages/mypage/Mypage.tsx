@@ -11,12 +11,11 @@ const BucketUrl = process.env.REACT_APP_BUCKET_URL;
 const Mypage = () => {
   const navigate = useNavigate();
   const { isLogin, name, petsitterBoolean, photo } = useSelector((state: IUser) => state.user);
-  console.log(isLogin, name, petsitterBoolean, photo);
+
   let PhotoUrl = 'imgs/DefaultUser.svg';
 
   if (photo) {
     PhotoUrl = `${BucketUrl}${photo}`;
-    // console.log(PhotoUrl);
   }
 
   useEffect(() => {
