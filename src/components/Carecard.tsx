@@ -108,6 +108,7 @@ const CareCard = ({ reservation }: any) => {
     }
   };
 
+  console.log(reservation);
   return (
     <CareCardContainer>
       <FirstLine>
@@ -140,9 +141,11 @@ const CareCard = ({ reservation }: any) => {
             </Wrapper>
           </PlaceTimeWrapper>
         </div>
-        {reservation.petsitterPhoto ? (
+        {reservation.pesitterPhoto || reservation.memberPhoto ? (
           <Photo
-            src={reservation.petsitterPhoto.replace('https://bucketUrl', bucketUrl)}
+            src={
+              petsitterBoolean ? `${bucketUrl}${reservation.memberPhoto}` : `${bucketUrl}${reservation.petsitterPhoto}`
+            }
             alt="petsitter photo"
             onError={onErrorImg}
           />

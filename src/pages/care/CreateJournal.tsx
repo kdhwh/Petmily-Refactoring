@@ -209,8 +209,8 @@ const CreateJournal = () => {
         <ReservationContainer>
           <FirstLine>
             <InfoContainer>
-              {reservation && reservation?.petsitter?.photo ? (
-                <Photo src={`${process.env.REACT_APP_BUCKET_URL}${reservation.petsitter.photo}`} alt="client" />
+              {reservation && reservation?.member?.photo ? (
+                <Photo src={`${process.env.REACT_APP_BUCKET_URL}${reservation.member.photo}`} alt="client" />
               ) : (
                 <DefaultImg src="/imgs/User.svg" alt="default img" />
               )}

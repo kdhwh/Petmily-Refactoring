@@ -49,9 +49,9 @@ const Reviews = () => {
             setReviews((prev) => [...prev, ...response.data.reviews]);
             setPage((page) => page + 1);
 
-            // if (response.data.pageInfo.totalPages === page || response.data.pageInfo.totalPages === 0) {
-            //   setIsEnd(true);
-            // }
+            if (response.data.pageInfo.totalPages === page || response.data.pageInfo.totalPages === 0) {
+              setIsEnd(true);
+            }
           }
         } catch (error) {
           console.error(error);
