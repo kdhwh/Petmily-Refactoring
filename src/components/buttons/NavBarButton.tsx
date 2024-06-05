@@ -31,9 +31,9 @@ const NavBarButtonStyle = styled.button<{ isActive: boolean }>`
   padding: 8px;
   border: none;
   flex: 1;
-  background-color: white;
+  background-color: ${({ theme }) => theme.backgroundColor.primary};
   font-weight: ${({ theme, isActive }) => (isActive ? theme.fontWeights.extrabold : theme.fontWeights.bold)};
-  color: ${({ theme, isActive }) => (isActive ? 'black' : theme.textColors.gray30)};
+  color: ${({ theme, isActive }) => (isActive ? theme.textColors.primary : theme.textColors.secondary)};
   border-bottom: ${({ theme, isActive }) => (isActive ? `2px solid ${theme.colors.mainBlue}` : null)};
   padding-bottom: 8px;
   margin-bottom: ${({ isActive }) => (isActive ? '-2px' : '0px')};

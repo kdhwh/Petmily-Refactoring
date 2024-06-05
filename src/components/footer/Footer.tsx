@@ -3,6 +3,7 @@ import styled from 'styled-components';
 const Footer = () => {
   return (
     <MainContainer>
+      <Dividerbox />
       <ContactUs>Contact Us</ContactUs>
       <MemberContainer>
         <BE>
@@ -30,7 +31,7 @@ const Footer = () => {
           </Link>
         </FE>
       </MemberContainer>
-      <Dividerbox />
+
       <CopyrightNotice>Copyright @ 2023 Petmily. All rights reserved.</CopyrightNotice>
       <LinkImgContainer>
         <LinkImg href="https://github.com/codestates-seb/seb45_main_013" target="_blank">
@@ -48,7 +49,7 @@ export default Footer;
 
 const MainContainer = styled.div`
   width: 100%;
-  height: auto;
+  height: 200px;
   bottom: 0;
   left: 0;
   right: 0;
@@ -57,10 +58,11 @@ const MainContainer = styled.div`
   align-items: center;
   justify-content: center;
   margin-top: auto;
-  background-color: ${(props) => props.theme.colors.mainBlue};
+  background-color: ${(props) => props.theme.backgroundColor.primary};
 `;
+
 const ContactUs = styled.div`
-  color: ${(props) => props.theme.colors.white};
+  color: ${(props) => props.theme.textColors.secondary};
   ${(props) => props.theme.fontSize.s16h24};
   font-weight: bold;
   margin-top: 20px;
@@ -74,26 +76,26 @@ const MemberContainer = styled.div`
 `;
 
 const Link = styled.a`
-  color: ${(props) => props.theme.colors.white};
+  color: ${(props) => props.theme.textColors.primary};
   font-weight: ${(props) => props.theme.fontWeights.light};
   ${(props) => props.theme.fontSize.s14h21};
   margin-left: 8px;
 `;
 
 const BE = styled.h1`
-  color: ${(props) => props.theme.colors.white};
+  color: ${(props) => props.theme.textColors.primary};
   font-weight: ${(props) => props.theme.fontWeights.light};
   ${(props) => props.theme.fontSize.s14h21};
 `;
 
 const FE = styled.h1`
-  color: ${(props) => props.theme.colors.white};
+  color: ${(props) => props.theme.textColors.primary};
   font-weight: ${(props) => props.theme.fontWeights.light};
   ${(props) => props.theme.fontSize.s14h21};
 `;
 
 const CopyrightNotice = styled.div`
-  color: ${(props) => props.theme.colors.white};
+  color: ${(props) => props.theme.textColors.secondary};
   ${(props) => props.theme.fontSize.s12h18};
   font-weight: ${(props) => props.theme.fontWeights.light};
   margin-bottom: 8px;
@@ -113,8 +115,8 @@ const Img = styled.img`
 `;
 
 const Dividerbox = styled.div`
-  width: 80%;
+  width: 100%;
   height: 2px;
-  border-top: 1px solid #b4b2ff;
+  border-top: 0.5px solid gray;
   margin-bottom: 8px;
 `;

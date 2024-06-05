@@ -3,7 +3,6 @@ import styled from 'styled-components';
 const HomeAd = () => {
   return (
     <AdContainer>
-      <GifContainer src="/imgs/HomeAd.gif" alt="ad" />
       <TextContainer>
         <Image src="/imgs/CatsAndDogs.png" alt="Image" />
         <TextWrapper>
@@ -44,7 +43,7 @@ const TextContainer = styled.div`
 `;
 
 const AdText = styled.div`
-  color: ${(props) => props.color || 'black'};
+  color: ${(props) => props.theme.textColors.secondary};
   font-size: 18px;
   font-weight: ${(props) => props.theme.fontWeights.extrabold};
 `;

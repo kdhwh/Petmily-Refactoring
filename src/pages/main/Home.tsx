@@ -222,19 +222,20 @@ const PetsitterLink = styled.a`
   align-items: center;
   padding: 20px 24px;
   cursor: pointer;
+  background-color: ${({ theme }) => theme.backgroundColor.secondary};
+  color: ${({ theme }) => theme.textColors.primary};
   font-weight: ${(props) => props.theme.fontWeights.bold};
   ${(props) => props.theme.fontSize.s16h24};
   box-shadow: ${(props) => props.theme.shadow.dp01};
+  &:hover {
+    background-color: #279eff;
+  }
 `;
 
 const StyledLink = styled.div`
   text-decoration: none;
   color: inherit;
   font-weight: ${(props) => props.theme.fontWeights.extrabold};
-
-  &:hover {
-    color: #279eff;
-  }
 `;
 
 const AdSubContainer = styled.div`
@@ -266,6 +267,7 @@ const OftenPetsitterContainer = styled.div`
   padding: 8px 12px;
   box-shadow: ${(props) => props.theme.shadow.dp01};
   border-radius: 8px;
+  background-color: ${({ theme }) => theme.backgroundColor.secondary};
 `;
 
 const OftenPetsitterbox = styled.div`

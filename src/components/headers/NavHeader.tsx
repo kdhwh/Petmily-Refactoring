@@ -34,7 +34,6 @@ const NavHeader = () => {
     if (!isLogin) {
       navigate('/login');
     } else if (isLogin) {
-      e.stopPropagation();
       setIsModalOpen(true);
     }
   };
@@ -168,7 +167,7 @@ const HeaderContatiner = styled.div`
   width: 100%;
   height: 84px;
   padding: 12px 12px 0;
-  background-color: white;
+  background-color: ${(props) => props.theme.backgroundColor.primary};
   max-width: 600px;
   box-shadow: ${(props) => props.theme.shadow.onlyBottom};
 `;
@@ -183,17 +182,9 @@ const NotiUserContainer = styled.nav`
   gap: 12px;
 `;
 
-// const NotiButton = styled.button`
-//   width: 24px;
-//   height: 24px;
-//   border: none;
-//   background-color: white;
-//   cursor: pointer;
-// `;
-
 const UserButton = styled.button`
   border: none;
-  background-color: white;
+  background-color: ${(props) => props.theme.backgroundColor.primary};
   cursor: pointer;
 `;
 
