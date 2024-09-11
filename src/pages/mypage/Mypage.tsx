@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { IUser } from 'store/userSlice';
+import { IUser } from 'redux/slice/userSlice';
 import MySchedule from '@components/MySchedule';
 import MyPetmily from '@components/MyPetmily';
 

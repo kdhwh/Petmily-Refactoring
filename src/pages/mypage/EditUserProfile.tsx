@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import UploadProfileImg from '../../components/UploadProfileImg';
 import { useState } from 'react';
-import { IUser, deleteUser } from 'store/userSlice';
+import { IUser, deleteUser } from 'redux/slice/userSlice';
 import { deleteCookie } from 'hooks/deleteCookie';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';

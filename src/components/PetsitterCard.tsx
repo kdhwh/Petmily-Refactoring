@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { IReservation } from 'store/reservationSlice';
+import { IReservation } from 'redux/slice/reservationSlice';
 import styled from 'styled-components';
 
 interface PetsitterProps {

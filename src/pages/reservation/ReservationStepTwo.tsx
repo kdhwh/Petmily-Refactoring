@@ -6,11 +6,11 @@ import { Box, Divider, Drawer, List, ListItem, ListItemText, ListSubheader } fro
 import { FormatListBulleted } from '@mui/icons-material';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { IReservation, deleteReservation } from 'store/reservationSlice';
+import { IReservation, deleteReservation } from 'redux/slice/reservationSlice';
 import { refreshAccessToken } from 'hooks/refreshAcessToken';
 import { getCookieValue } from 'hooks/getCookie';
 import PetsitterCard from '@components/PetsitterCard';
-import { deleteUser } from 'store/userSlice';
+import { deleteUser } from 'redux/slice/userSlice';
 import { deleteCookie } from 'hooks/deleteCookie';
 
 const apiUrl = process.env.REACT_APP_API_URL;

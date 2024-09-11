@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import axios, { AxiosError } from 'axios';
 import { getCookieValue } from 'hooks/getCookie';
 import { useSelector } from 'react-redux';
-import { IUser } from 'store/userSlice';
+import { IUser } from 'redux/slice/userSlice';
 
 //  DefaultUserProfile 이미지 안보임
 //  모달 디자인

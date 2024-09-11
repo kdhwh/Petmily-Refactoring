@@ -8,8 +8,8 @@ import { TextField, Divider, Checkbox, Dialog, DialogTitle, DialogContent, Dialo
 import { notice, verificationNotice, impossibleNotice1, impossibleNotice2 } from 'util/noticeText';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { IReservation, addBody, deleteReservation } from 'store/reservationSlice';
-import { IUser } from 'store/userSlice';
+import { IReservation, addBody, deleteReservation } from 'redux/slice/reservationSlice';
+import { IUser } from 'redux/slice/userSlice';
 import { getCookieValue } from 'hooks/getCookie';
 import axios from 'axios';
 import { useNavigate } from 'react-router';

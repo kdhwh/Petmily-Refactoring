@@ -1,5 +1,4 @@
 import { createSlice, createSelector } from '@reduxjs/toolkit';
-import { RootState } from 'store';
 
 export interface IPet {
   name: string;

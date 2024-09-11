@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { getCookieValue } from 'hooks/getCookie';
-import { IUser, deleteUser, login, setUser } from 'store/userSlice';
+import { IUser, deleteUser, login, setUser } from 'redux/slice/userSlice';
 import { deleteCookie } from 'hooks/deleteCookie';
 import { refreshAccessToken } from 'hooks/refreshAcessToken';
 

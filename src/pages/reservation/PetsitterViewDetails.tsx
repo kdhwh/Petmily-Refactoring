@@ -2,12 +2,12 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setReservation, setPetsitterId, IReservation } from 'store/reservationSlice';
+import { setReservation, setPetsitterId, IReservation } from 'redux/slice/reservationSlice';
 import axios from 'axios';
 
 import { getCookieValue } from 'hooks/getCookie';
 import { refreshAccessToken } from 'hooks/refreshAcessToken';
-import { IUser } from 'store/userSlice';
+import { IUser } from 'redux/slice/userSlice';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 

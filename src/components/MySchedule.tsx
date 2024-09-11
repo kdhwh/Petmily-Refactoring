@@ -5,7 +5,7 @@ import { getCookieValue } from 'hooks/getCookie';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { IUser } from 'store/userSlice';
+import { IUser } from 'redux/slice/userSlice';
 import { PetmilyCard } from './MyPetmily';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import PersonPinIcon from '@mui/icons-material/PersonPin';

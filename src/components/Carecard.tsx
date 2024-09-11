@@ -1,4 +1,4 @@
-import { IUser } from 'store/userSlice';
+import { IUser } from 'redux/slice/userSlice';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';

@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { login } from 'store/userSlice';
+import { login } from 'redux/slice/userSlice';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -123,7 +123,6 @@ const MainContainer = styled.main`
   display: flex;
   justify-content: center;
   width: 100%;
-  background-color: white;
 `;
 
 const LoginContainer = styled.div`
@@ -145,10 +144,6 @@ const InputForm = styled.form`
 `;
 
 export const SubmitButtonStyle = styled.button`
-  //
-  position: relative;
-  //
-
   margin-top: 12px;
   height: 32px;
   width: 100%;

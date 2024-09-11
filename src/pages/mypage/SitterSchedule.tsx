@@ -14,7 +14,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { getCookieValue } from 'hooks/getCookie';
-import { IUser } from 'store/userSlice';
+import { IUser } from 'redux/slice/userSlice';
 import dayjs, { Dayjs } from 'dayjs';
 import DaumPostcode from 'react-daum-postcode';
 import { Modal, Sheet } from '@mui/joy';

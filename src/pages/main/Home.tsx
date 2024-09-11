@@ -12,7 +12,7 @@ import { refreshAccessToken } from 'hooks/refreshAcessToken';
 import { useSelector } from 'react-redux';
 import StarIcon from '@mui/icons-material/Star';
 import { styled as styledMui } from '@mui/material/styles';
-import { IUser } from 'store/userSlice';
+import { IUser } from 'redux/slice/userSlice';
 import Footer from '@components/footer/Footer';
 import HomeAd from '@components/HomeAd';
 

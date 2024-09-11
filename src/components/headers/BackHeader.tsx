@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { IUser } from 'store/userSlice';
+import { IUser } from 'redux/slice/userSlice';
 
 import BackButton from '@components/buttons/BackButton';
 import styled from 'styled-components';
@@ -20,5 +20,4 @@ const Container = styled.header`
   width: 100%;
   height: 64px;
   padding: 12px;
-  background-color: white;
 `;

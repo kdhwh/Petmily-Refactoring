@@ -4,8 +4,8 @@ import axios from 'axios';
 
 import { getCookieValue } from 'hooks/getCookie';
 import { refreshAccessToken } from 'hooks/refreshAcessToken';
-import { deleteReservation } from 'store/reservationSlice';
-import { deleteUser } from 'store/userSlice';
+import { deleteReservation } from 'redux/slice/reservationSlice';
+import { deleteUser } from 'redux/slice/userSlice';
 import { deleteCookie } from 'hooks/deleteCookie';
 import { useDispatch } from 'react-redux';
 import PetsitterCard from '@components/PetsitterCard';

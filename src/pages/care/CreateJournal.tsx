@@ -4,7 +4,7 @@ import { refreshAccessToken } from 'hooks/refreshAcessToken';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
-import { IUser } from 'store/userSlice';
+import { IUser } from 'redux/slice/userSlice';
 import styled, { keyframes } from 'styled-components';
 
 const apiUrl = process.env.REACT_APP_API_URL;

@@ -36,8 +36,8 @@ import isBetween from 'dayjs/plugin/isBetween';
 import { getCookieValue } from 'hooks/getCookie';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteReservation, setReservation } from 'store/reservationSlice';
-import { IUser, deleteUser } from 'store/userSlice';
+import { deleteReservation, setReservation } from 'redux/slice/reservationSlice';
+import { IUser, deleteUser } from 'redux/slice/userSlice';
 import { refreshAccessToken } from 'hooks/refreshAcessToken';
 import { deleteCookie } from 'hooks/deleteCookie';
 

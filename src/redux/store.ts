@@ -1,20 +1,19 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { combineReducers } from 'redux';
-import { persistReducer } from 'redux-persist';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import userReducer from './userSlice';
-import reservationReducer from './reservationSlice';
-
-const reducers = combineReducers({
-  user: userReducer,
-  reservation: reservationReducer,
-});
+import userReducer from './slice/userSlice';
+import reservationReducer from './slice/reservationSlice';
 
 const persistConfig = {
   key: 'root',
   storage,
 };
+
+const reducers = combineReducers({
+  user: userReducer,
+  reservation: reservationReducer,
+});
 
 const persistedReducer = persistReducer(persistConfig, reducers);
 
@@ -26,3 +25,4 @@ const store = configureStore({
 export type RootState = ReturnType<typeof store.getState>;
 
 export default store;
+export const persistor = persistStore(store);

@@ -4,7 +4,7 @@ import { getCookieValue } from 'hooks/getCookie';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { IUser } from 'store/userSlice';
+import { IUser } from 'redux/slice/userSlice';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 const token = getCookieValue('access_token');

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
-import { IUser } from 'store/userSlice';
+import { IUser } from 'redux/slice/userSlice';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import CareCard from '@components/Carecard';
